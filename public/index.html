@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script src='jquery-1.7.1.min.js'></script>
+    <script src='mustache.js'></script>
+    <script type='text/html' id='template_register'>
+      <form id='form_register'>
+	<label for='register_email'>EMail</label><input type='text' name='email' id='register_email'><br>
+	<label for='register_password'>Password</label><input type='password' name='password' id='register_password'></br>
+	<input type='submit'>
+      </form>
+    </script>
+    <script>
+      function User() {
+	var self=this;
+	var token;
+
+	function init() {
+	  token=localStorage.getItem("user_token");
+	  console.log("token",token);
+	};
+
+	init();
+
+	this.registered=function() {
+	  return token!==null;
+	};
+
+      }
+
+
+      function RegisterController(ops) {
+	var self=this;
+	this.el="#main";
+	this.template="#template_register";
+	$.extend(this,ops);
+
+	function registerHandlers() {
+	}
+
+	this.view=function() {
+	  $(self.el).html(Mustache.render($(self.template).html()));
+	}
+      }
+
+      $(function() {
+	var user=new User();
+	var registerController=new RegisterController();
+	if(!user.registered()) {
+	  registerController.view();
+	}
+      });
+    </script>
+  </head>
+  <body>
+    <div id='main'></div>
+  </body>
+</html>
