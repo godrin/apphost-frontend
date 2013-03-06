@@ -1,5 +1,10 @@
-#!/usr/bin/env rackup
+#!/usr/bin/env ruby
+##ackup
+require 'rubygems'
+require 'pp'
+pp $:
 
-require 'apphost_frontend/config.ru'
+require 'apphost_frontend.rb'
+#/config.ru'
 
 
