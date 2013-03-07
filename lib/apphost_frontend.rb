@@ -1,5 +1,1 @@
-module AppHost
-  module Frontend
-    puts "frontend"
-  end
-end
+require 'apphost_frontend/app.rb'

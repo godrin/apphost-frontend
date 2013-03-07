@@ -5,6 +5,6 @@ else
   HOSTNAME = "localhost"
   GITOLITE_ADMIN_HOME="/home/david/server/gitolite-admin"
 end
-require './app.rb'
+require File.expand_path('../app.rb',__FILE__)
 
 run GitoliteAdminApp

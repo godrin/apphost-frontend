@@ -1,10 +1,15 @@
 #!/usr/bin/env ruby
-##ackup
-require 'rubygems'
+#require 'apphost_frontend'
+require 'apphost_frontend/cli.rb'
+#run GitoliteAdminApp
+require "rack"
+pa=File.expand_path("../../lib/apphost_frontend/config.ru",__FILE__)
 require 'pp'
-pp $:
+pp pa
 
-require 'apphost_frontend.rb'
-#/config.ru'
+options=AppHost::Frontend::Options.parse!(ARGV)
+options[:config]=pa
+Rack::Server.start options
+#:config=>pa
 
 

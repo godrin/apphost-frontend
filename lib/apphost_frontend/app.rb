@@ -2,10 +2,10 @@ require 'gitolite'
 require 'sinatra'
 require 'digest/sha1'
 require 'json'
-require './model.rb'
+require File.expand_path('../model.rb',__FILE__)
 
 class Ga
-  @@ga_repo=Gitolite::GitoliteAdmin.new(GITOLITE_ADMIN_HOME)
+  @@ga_repo=ENV["GITOLITE_ADMIN_HOME"]||"."
 
   def self.url(repoName)
     "git@"+HOSTNAME+":"+repoName
