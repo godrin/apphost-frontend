@@ -114,6 +114,10 @@ module AppHost
     class GitoliteAdminApp < Sinatra::Base
 
       enable  :methodoverride
+      public_folder=File.expand_path('../../../public',__FILE__)
+      pp public_folder
+      set :public_folder,public_folder 
+      #static'
 
       helpers do
 	def json(data)
