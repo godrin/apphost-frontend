@@ -65,6 +65,15 @@ module AppHost
 	    options[:pid] = ::File.expand_path(f)
 	  }
 
+	  options[:admin]={}
+
+	  opts.separator ""
+	  opts.separator "Options for apphost-frontend:"
+	  opts.on("-G","--gitolite-dir DIRECTORY","Directory containing a checkedout gitolite-admin repo") {|f|
+	    options[:admin][:gitolite_dir]=::File.expand_path(f)
+	  }
+
+
 	  opts.separator ""
 	  opts.separator "Common options:"
 
@@ -91,6 +100,28 @@ module AppHost
 
 	options
       end
+      def handler_opts(options)
+	begin
+	  info = []
+	  server = Rack::Handler.get(options[:server]) || Rack::Handler.default(options)
+	  if server && server.respond_to?(:valid_options)
+	    info << ""
+	    info << "Server-specific options for #{server.name}:"
+
+	    has_options = false
+	    server.valid_options.each do |name, description|
+	      next if name.to_s.match(/^(Host|Port)[^a-zA-Z]/) # ignore handler's host and port options, we do our own.
+	      info << "  -O %-21s %s" % [name, description]
+	      has_options = true
+	    end
+	    return "" if !has_options
+	  end
+	  info.join("\n")
+	rescue NameError
+	  return "Warning: Could not find handler specified (#{options[:server] || 'default'}) to determine handler-specific options"
+	end
+      end
+
     end
   end
 end

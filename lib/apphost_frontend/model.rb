@@ -1,6 +1,6 @@
 require 'data_mapper'
 require 'digest/sha1'
-
+require 'pp'
 DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default, (ENV["DATABASE_URL"]|| 'sqlite://'+File.expand_path('../git.db',__FILE__)))
 DataMapper::Model.raise_on_save_failure=true
@@ -76,4 +76,4 @@ class Repository
 end
 DataMapper.finalize
 DataMapper.auto_upgrade!
-
+pp Dir.pwd

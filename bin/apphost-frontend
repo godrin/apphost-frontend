@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #require 'apphost_frontend'
+require 'apphost_frontend'
 require 'apphost_frontend/cli.rb'
 #run GitoliteAdminApp
 require "rack"
@@ -7,8 +8,12 @@ pa=File.expand_path("../../lib/apphost_frontend/config.ru",__FILE__)
 require 'pp'
 pp pa
 
-options=AppHost::Frontend::Options.parse!(ARGV)
+options=AppHost::Frontend::Options.new.parse!(ARGV)
 options[:config]=pa
+admin_options=options[:admin]
+AppHost::Frontend::setOptions(admin_options)
+options[:admin]=nil
+
 Rack::Server.start options
 #:config=>pa
 
